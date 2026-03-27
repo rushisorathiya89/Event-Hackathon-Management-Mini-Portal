@@ -1,0 +1,74 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Event-Hackathon-Management-Mini-Portal\\Hackathon_Portal\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4113F5B3-C2A9-4CAC-9F63-6208FFD1CC34}|Hackathon_Portal\\Hackathon_Portal.csproj|d:\\event-hackathon-management-mini-portal\\hackathon_portal\\hackathon_portal\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4113F5B3-C2A9-4CAC-9F63-6208FFD1CC34}|Hackathon_Portal\\Hackathon_Portal.csproj|solutionrelative:hackathon_portal\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4113F5B3-C2A9-4CAC-9F63-6208FFD1CC34}|Hackathon_Portal\\Hackathon_Portal.csproj|d:\\event-hackathon-management-mini-portal\\hackathon_portal\\hackathon_portal\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4113F5B3-C2A9-4CAC-9F63-6208FFD1CC34}|Hackathon_Portal\\Hackathon_Portal.csproj|solutionrelative:hackathon_portal\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ErrorViewModel.cs",
+              "DocumentMoniker": "D:\\Event-Hackathon-Management-Mini-Portal\\Hackathon_Portal\\Hackathon_Portal\\Models\\ErrorViewModel.cs",
+              "RelativeDocumentMoniker": "Hackathon_Portal\\Models\\ErrorViewModel.cs",
+              "ToolTip": "D:\\Event-Hackathon-Management-Mini-Portal\\Hackathon_Portal\\Hackathon_Portal\\Models\\ErrorViewModel.cs",
+              "RelativeToolTip": "Hackathon_Portal\\Models\\ErrorViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-27T05:56:27.965Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\Event-Hackathon-Management-Mini-Portal\\Hackathon_Portal\\Hackathon_Portal\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Hackathon_Portal\\Controllers\\HomeController.cs",
+              "ToolTip": "D:\\Event-Hackathon-Management-Mini-Portal\\Hackathon_Portal\\Hackathon_Portal\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Hackathon_Portal\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAYwCMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-27T05:16:26.024Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

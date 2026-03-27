@@ -15,8 +15,25 @@ namespace Hackathon_Portal.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var model = new HomePageViewModel
+            {
+                TotalEvents = 15,
+                TotalTeams = 1200,
+                TotalJudges = 50,
+                Leaderboard = new List<LeaderboardItemViewModel>
+                {
+                    new() { Rank = 1, TeamName = "Null Pointers", TotalPoints = 12450 },
+                    new() { Rank = 2, TeamName = "Binary Bandits", TotalPoints = 11920 },
+                    new() { Rank = 3, TeamName = "Cyber Sentinels", TotalPoints = 10840 },
+                    new() { Rank = 4, TeamName = "Algorithm Alchemists", TotalPoints = 9710 },
+                    new() { Rank = 5, TeamName = "Cloud Walkers", TotalPoints = 9305 }
+                }
+            };
+
+            return View(model);
         }
+
+
 
         public IActionResult Privacy()
         {

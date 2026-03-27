@@ -1,0 +1,29 @@
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Leaderboard";
+}
+
+<div class="admin-surface">
+    <div class="card admin-card">
+        <div class="card-body p-4">
+            <h1 class="h4 mb-3">Global Leaderboard</h1>
+            <p class="text-secondary mb-4">Current standings based on normalized judging scores.</p>
+
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Team</th>
+                        <th>Category</th>
+                        <th class="text-end">Average Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>Null Pointers</td><td>Infrastructure</td><td class="text-end fw-semibold">9.4</td></tr>
+                    <tr><td>2</td><td>Cloud Catchers</td><td>SaaS</td><td class="text-end fw-semibold">8.9</td></tr>
+                    <tr><td>3</td><td>Binary Brutes</td><td>Security</td><td class="text-end fw-semibold">8.2</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

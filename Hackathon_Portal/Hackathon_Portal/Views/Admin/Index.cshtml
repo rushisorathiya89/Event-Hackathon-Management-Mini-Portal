@@ -1,0 +1,346 @@
+@model Hackathon_Portal.Models.AdminDashboardViewModel
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="admin-surface">
+    <!-- KPI Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-12 col-md-4">
+            <div class="card admin-kpi-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <div class="admin-kpi-label">Total Teams</div>
+                            <div class="admin-kpi-value">@Model.TotalTeams</div>
+                        </div>
+                        <div class="admin-kpi-icon text-primary">👥</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <div class="card admin-kpi-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <div class="admin-kpi-label">Active Judges</div>
+                            <div class="admin-kpi-value">@Model.TotalJudges</div>
+                        </div>
+                        <div class="admin-kpi-icon text-success">⭐</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <div class="card admin-kpi-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <div class="admin-kpi-label">Total Events</div>
+                            <div class="admin-kpi-value">@Model.TotalEvents</div>
+                        </div>
+                        <div class="admin-kpi-icon text-info">📅</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Row -->
+    <div class="row g-4">
+        <!-- Event Management & Judge Assignments -->
+        <div class="col-12 col-xl-8">
+            <!-- Events Section -->
+            <section class="card admin-card mb-4 border-0 shadow-sm">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center border-0 pt-4 px-4 pb-2">
+                    <div>
+                        <h2 class="h5 mb-1">Event Management</h2>
+                        <p class="text-muted small mb-0">Manage registration status and event details</p>
+                    </div>
+                </div>
+                <div class="card-body pt-2 px-4">
+                    @if (!Model.ActiveEvents.Any())
+                    {
+                        <div class="alert alert-info mb-0">No events found.</div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-borderless align-middle admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>EVENT NAME</th>
+                                        <th>START DATE</th>
+                                        <th>REGISTRATION</th>
+                                        <th>ACTIONS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var evt in Model.ActiveEvents.Take(5))
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="fw-semibold">@evt.Title</div>
+                                            </td>
+                                            <td>
+                                                <span class="text-muted">@evt.StartDate.ToString("MMM dd, yyyy")</span>
+                                            </td>
+                                            <td>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input registration-toggle" type="checkbox" 
+                                                           data-event-id="@evt.Id" 
+                                                           @(evt.IsRegistrationOpen ? "checked" : "") />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a asp-controller="Event" asp-action="Edit" asp-route-id="@evt.Id" 
+                                                   class="btn btn-sm btn-outline-primary">Edit</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </section>
+
+            <!-- Judge Assignments Section -->
+            <section class="card admin-card border-0 shadow-sm">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center border-0 pt-4 px-4 pb-2">
+                    <div>
+                        <h2 class="h5 mb-1">Judge Management</h2>
+                        <p class="text-muted small mb-0">Manage judges and their assignments</p>
+                    </div>
+                    <button class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#addJudgeModal">+</button>
+                </div>
+                <div class="card-body pt-2 px-4">
+                    @if (!Model.Judges.Any())
+                    {
+                        <div class="alert alert-info mb-0">No judges assigned yet.</div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-borderless align-middle admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>JUDGE EMAIL</th>
+                                        <th>ASSIGNED DATE</th>
+                                        <th>ACTIONS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var judge in Model.Judges.Take(5))
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="fw-semibold">@judge.Email</div>
+                                            </td>
+                                            <td class="text-muted">
+                                                @(judge.LockoutEnd.HasValue ? judge.LockoutEnd.Value.DateTime.ToString("MMM dd, yyyy") : "N/A")
+                                            </td>
+                                            <td>
+                                                <form method="post" asp-action="RevokeJudge" asp-route-userId="@judge.Id" style="display:inline;">
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger" 
+                                                            onclick="return confirm('Revoke Judge access for @judge.Email?');">
+                                                        Revoke
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+                <div class="card-footer bg-white border-0 px-4 pb-4">
+                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#addJudgeModal">
+                        + Add New Judge
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <!-- Right Column: Leaderboard Preview -->
+        <div class="col-12 col-xl-4">
+            <section class="card admin-card border-0 shadow-sm h-100">
+                <div class="card-header bg-white border-0 pt-4 px-4 pb-2">
+                    <h2 class="h5 mb-1">Top Teams</h2>
+                    <p class="text-muted small mb-0">Current standings</p>
+                </div>
+                <div class="card-body pt-2 px-4">
+                    @if (!Model.TopTeams.Any())
+                    {
+                        <div class="alert alert-info mb-0">No team scores yet.</div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-sm table-borderless align-middle">
+                                <tbody>
+                                    @foreach (var team in Model.TopTeams)
+                                    {
+                                        var rankClass = team.Rank == 1 ? "rank-gold" : team.Rank == 2 ? "rank-silver" : team.Rank == 3 ? "rank-bronze" : "";
+                                        <tr class="@rankClass">
+                                            <td>
+                                                <span class="rank-badge rank-@team.Rank">#@team.Rank</span>
+                                            </td>
+                                            <td class="fw-semibold">@team.TeamName</td>
+                                            <td class="text-end">
+                                                <span class="leaderboard-score-badge">@team.FinalScore.ToString("F1")</span>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+                <div class="card-footer bg-white border-0 px-4 pb-4">
+                    <a asp-controller="Leaderboard" asp-action="Index" class="btn btn-outline-secondary btn-sm w-100">
+                        View Full Leaderboard →
+                    </a>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- Add Judge Modal -->
+<div class="modal fade" id="addJudgeModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Judge</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="post" asp-action="AddJudge">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="judgeEmail" class="form-label">Judge Email</label>
+                        <input type="email" class="form-control" id="judgeEmail" name="email" 
+                               placeholder="judge@example.com" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Judge</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.registration-toggle').forEach(toggle => {
+            toggle.addEventListener('change', async function () {
+                const eventId = this.dataset.eventId;
+                const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+                
+                try {
+                    const response = await fetch('@Url.Action("ToggleRegistration")', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'RequestVerificationToken': token
+                        },
+                        body: `eventId=${eventId}`
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log('Registration toggled:', data);
+                    } else {
+                        this.checked = !this.checked; // Revert on error
+                        alert('Failed to update registration status.');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    this.checked = !this.checked; // Revert on error
+                }
+            });
+        });
+    </script>
+}
+
+<style>
+.admin-kpi-card {
+    border-radius: 0.6rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.admin-kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(35, 48, 80, 0.12) !important;
+}
+
+.admin-kpi-label {
+    color: #5a6172;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.admin-kpi-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a2440;
+}
+
+.admin-kpi-icon {
+    font-size: 1.8rem;
+    opacity: 0.7;
+}
+
+.rank-badge {
+    font-weight: 700;
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.8rem;
+}
+
+.rank-badge.rank-1 {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.rank-badge.rank-2 {
+    background-color: #e5e7eb;
+    color: #374151;
+}
+
+.rank-badge.rank-3 {
+    background-color: #fed7aa;
+    color: #7c2d12;
+}
+
+.rank-gold {
+    background-color: #fffbeb;
+}
+
+.rank-silver {
+    background-color: #f3f4f6;
+}
+
+.rank-bronze {
+    background-color: #fef3c7;
+}
+
+.leaderboard-score-badge {
+    background-color: #1e3a8a;
+    color: #fff;
+    padding: 0.35rem 0.6rem;
+    border-radius: 0.3rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+</style>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Hack Portal</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Hackathon_Portal.styles.css" asp-append-version="true" />
+</head>
+<body class="portal-body">
+    <header class="portal-header">
+        <nav class="navbar navbar-expand-lg navbar-dark portal-navbar">
+            <div class="container-xl">
+                <a class="navbar-brand portal-brand" asp-controller="Home" asp-action="Index">HACK-PORTAL</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#portalNav" aria-controls="portalNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="portalNav">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-2">
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Event" asp-action="Index">Events</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Leaderboard" asp-action="Index">Leaderboard</a></li>
+                    </ul>
+
+                    <div class="d-flex">
+                        @if (User?.Identity?.IsAuthenticated ?? false)
+                        {
+                            <a class="btn btn-link portal-profile-link me-2" asp-controller="Participant" asp-action="Profile">Profile</a>
+                            <form method="post" asp-controller="Account" asp-action="Logout" style="display:inline;">
+                                <button type="submit" class="btn btn-sm btn-outline-secondary">Logout</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a class="btn portal-login-btn" asp-controller="Account" asp-action="Login">Login</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer class="portal-footer mt-5">
+        <div class="container-xl py-4">
+            <div class="row g-4">
+                <div class="col-12 col-md-4">
+                    <h3 class="portal-footer-title">HACK-PORTAL</h3>
+                    <p class="portal-footer-text mb-0">&copy; 2026 HACK-PORTAL</p>
+                    <p class="portal-footer-text mb-0">Analytical Architect Systems.</p>
+                    <p class="portal-footer-text mb-0">Building the future of competitive programming.</p>
+                </div>
+                <div class="col-12 col-md-4">
+                    <h3 class="portal-footer-title">SITE LINKS</h3>
+                    <ul class="list-unstyled mb-0 portal-footer-links">
+                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-controller="Event" asp-action="Index">Events</a></li>
+                        <li><a asp-controller="Home" asp-action="Index" asp-fragment="leaderboard">Leaderboard</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4">
+                    <h3 class="portal-footer-title">CONTACT</h3>
+                    <p class="portal-footer-text mb-1">support@hackportal.com</p>
+                    <a class="portal-footer-link" href="#">Contact Us Form</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

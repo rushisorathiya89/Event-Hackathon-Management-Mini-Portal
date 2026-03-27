@@ -1,0 +1,23 @@
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Teams and Registration";
+}
+
+<div class="admin-surface">
+    <div class="card admin-card">
+        <div class="card-body p-4">
+            <h1 class="h4 mb-3">Teams & Registration</h1>
+            <p class="text-secondary mb-4">Track seat utilization and team onboarding status.</p>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-4"><div class="p-3 rounded border bg-light"><div class="text-muted small">Total Teams</div><div class="h3 mb-0">45</div></div></div>
+                <div class="col-md-4"><div class="p-3 rounded border bg-light"><div class="text-muted small">Slots Remaining</div><div class="h3 mb-0">15</div></div></div>
+                <div class="col-md-4"><div class="p-3 rounded border bg-light"><div class="text-muted small">Waitlisted</div><div class="h3 mb-0">6</div></div></div>
+            </div>
+
+            <div class="progress" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar" style="width:75%">75% Filled</div>
+            </div>
+        </div>
+    </div>
+</div>

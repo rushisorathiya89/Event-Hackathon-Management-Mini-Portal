@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.AspNetCore.Identity.UI.UIFrameworkAttribute("Bootstrap5")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("Hackathon_Portal")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+156f0aa963ed483f067d9db7f19e8871781ab7bf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e7062524e7b5013b4917f96e946742772d7b79ad")]
 [assembly: System.Reflection.AssemblyProductAttribute("Hackathon_Portal")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Hackathon_Portal")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

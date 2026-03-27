@@ -1,0 +1,52 @@
+@model Hackathon_Portal.Controllers.LoginViewModel
+
+@{
+    Layout = "_PortalLayout";
+    ViewData["Title"] = "Login";
+}
+
+<section class="login-section py-5">
+<div class="container" style="max-width: 400px;">
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+            <h1 class="h3 mb-4">Login</h1>
+
+            <form asp-action="Login" method="post">
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">Email Address</label>
+                    <input asp-for="Email" class="form-control" placeholder="admin@gmail.com" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label">Password</label>
+                    <input asp-for="Password" class="form-control" type="password" placeholder="Enter password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input asp-for="RememberMe" class="form-check-input" />
+                    <label asp-for="RememberMe" class="form-check-label">Remember me</label>
+                </div>
+
+                @if (!ViewData.ModelState.IsValid && ViewData.ModelState.Any())
+                {
+                    <div class="alert alert-danger">
+                        Invalid login attempt. Please try again.
+                    </div>
+                }
+
+                <button type="submit" class="btn btn-primary w-100">Sign In</button>
+            </form>
+
+            <hr class="my-3" />
+
+            <div class="text-center">
+                <p class="text-muted small">Demo Credentials:</p>
+                <p class="small"><strong>Email:</strong> admin@gmail.com</p>
+                <p class="small"><strong>Password:</strong> 000</p>
+            </div>
+        </div>
+    </div>
+</div>
+</section>

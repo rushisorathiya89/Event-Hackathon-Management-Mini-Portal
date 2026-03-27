@@ -1,8 +1,83 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model Hackathon_Portal.Models.HomePageViewModel
+
+@{
+    Layout = "_PortalLayout";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="portal-hero pt-5 pb-4">
+    <div class="container-xl">
+        <div class="portal-hero-copy mb-4">
+            <h1 class="portal-hero-title">The Pulse of <span>Innovation</span></h1>
+            <p class="portal-hero-subtitle mb-0">Welcome to the central command for the world's most intense developer competitions. Monitor performance, join global events, and climb the standings.</p>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-12 col-md-4">
+                <article class="card portal-stat-card h-100" data-watermark="15">
+                    <div class="card-body">
+                        <div class="portal-stat-icon portal-icon-blue">E</div>
+                        <div class="portal-stat-number">@Model.TotalEvents+</div>
+                        <div class="portal-stat-label">TOTAL EVENTS</div>
+                    </div>
+                </article>
+            </div>
+            <div class="col-12 col-md-4">
+                <article class="card portal-stat-card h-100" data-watermark="1.2K">
+                    <div class="card-body">
+                        <div class="portal-stat-icon portal-icon-orange">T</div>
+                        <div class="portal-stat-number">@Model.TotalTeams.ToString("N0")+</div>
+                        <div class="portal-stat-label">TEAMS PLAYED</div>
+                    </div>
+                </article>
+            </div>
+            <div class="col-12 col-md-4">
+                <article class="card portal-stat-card h-100" data-watermark="50">
+                    <div class="card-body">
+                        <div class="portal-stat-icon portal-icon-gray">J</div>
+                        <div class="portal-stat-number">@Model.TotalJudges+</div>
+                        <div class="portal-stat-label">EXPERT JUDGES</div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="leaderboard" class="portal-leaderboard py-5">
+    <div class="container-xl">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+            <div>
+                <div class="portal-section-kicker">LIVE METRICS</div>
+                <h2 class="portal-section-title mb-0">Current Global Standings</h2>
+            </div>
+            <span class="portal-live-pill">Live Connectivity Active</span>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table portal-standings-table align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>RANK</th>
+                        <th>TEAM NAME</th>
+                        <th class="text-end">TOTAL POINTS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Leaderboard)
+                    {
+                        <tr class="@(item.Rank == 1 ? "top-rank" : string.Empty)">
+                            <td>@item.Rank.ToString("00")</td>
+                            <td>@item.TeamName</td>
+                            <td class="text-end">@item.TotalPoints.ToString("N0")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="text-center mt-3">
+            <a asp-controller="Home" asp-action="Index" asp-fragment="leaderboard" class="portal-more-link">View Full Leaderboard</a>
+        </div>
+    </div>
+</section>

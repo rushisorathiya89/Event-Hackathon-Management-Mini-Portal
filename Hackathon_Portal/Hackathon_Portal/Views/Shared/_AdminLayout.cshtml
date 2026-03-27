@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Hackathon_Portal.styles.css" asp-append-version="true" />
+</head>
+<body class="admin-body">
+    <header>
+        <nav class="admin-topbar navbar navbar-expand-lg">
+            <div class="container-fluid px-3 px-lg-4">
+                <a class="navbar-brand text-white fw-semibold" asp-controller="Admin" asp-action="Index">HACK-PORTAL (Admin)</a>
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn btn-link text-white p-0 admin-icon-btn" type="button" aria-label="Notifications">&#128276;</button>
+                    <button class="btn btn-link text-white p-0 admin-icon-btn" type="button" aria-label="Settings">&#9881;</button>
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-sm btn-light admin-logout-btn">Logout</a>
+                </div>
+            </div>
+        </nav>
+
+        <nav class="admin-subnav border-bottom">
+            <div class="container-fluid px-3 px-lg-4">
+                <ul class="nav admin-nav-tabs">
+                    <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")" asp-controller="Admin" asp-action="Index">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Events" ? "active" : "")" asp-controller="Admin" asp-action="Events">Events</a></li>
+                    <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Judges" ? "active" : "")" asp-controller="Admin" asp-action="Judges">Judges</a></li>
+                    <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "TeamsRegistration" ? "active" : "")" asp-controller="Admin" asp-action="TeamsRegistration">Teams/Registration</a></li>
+                    <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Leaderboard" ? "active" : "")" asp-controller="Admin" asp-action="Leaderboard">Leaderboard</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="admin-main container-fluid px-3 px-lg-4 py-4">
+        @RenderBody()
+    </main>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

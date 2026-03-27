@@ -1,0 +1,191 @@
+@model Hackathon_Portal.Models.LeaderboardViewModel
+
+@{
+    Layout = "_PortalLayout";
+    ViewData["Title"] = "Leaderboard";
+}
+
+<section class="leaderboard-section py-4">
+<div class="container-xl">
+    <div class="row g-4">
+        <!-- Sidebar -->
+        <div class="col-12 col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-bottom">
+                    <h2 class="h6 mb-0">Select Event</h2>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        @if (Model?.PastEvents?.Any() == true)
+                        {
+                            @foreach (var evt in Model.PastEvents)
+                            {
+                                var isActive = Model.SelectedEvent?.Id == evt.Id;
+                                <a asp-controller="Leaderboard" asp-action="Index" asp-route-eventId="@evt.Id" 
+                                   class="list-group-item list-group-item-action @(isActive ? "active" : "")">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="fw-semibold">@evt.Title</div>
+                                            <small class="text-muted">@evt.StartDate:MMM d, yyyy</small>
+                                        </div>
+                                        @if (isActive)
+                                        {
+                                            <span class="badge bg-primary">»</span>
+                                        }
+                                    </div>
+                                </a>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-12 col-md-9">
+            @if (Model?.SelectedEvent == null)
+            {
+                <div class="alert alert-info">
+                    No events available or selected.
+                </div>
+            }
+            else
+            {
+                <!-- Event Header -->
+                <div class="mb-4">
+                    <div class="leaderboard-header">
+                        <div class="leaderboard-kicker">LIVE RESULTS</div>
+                        <h1 class="leaderboard-title">@Model.SelectedEvent.Title - Official Standings</h1>
+                        <p class="leaderboard-subtitle">[T+24 Final - Audit Complete]</p>
+                    </div>
+                </div>
+
+                @if (!Model.Rankings.Any())
+                {
+                    <div class="alert alert-info">
+                        No rankings available for this event yet.
+                    </div>
+                }
+                else
+                {
+                    <!-- Podium Section -->
+                    <div class="leaderboard-podium mb-5">
+                        <div class="text-center mb-4">
+                            <span class="leaderboard-podium-label">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" class="me-1">
+                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V15a.5.5 0 0 1-1 0V.5A.5.5 0 0 1 3.5 0zm7 0a.5.5 0 0 1 .5.5V15a.5.5 0 0 1-1 0V.5A.5.5 0 0 1 10.5 0zm-3.5 2a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-1 0v-11a.5.5 0 0 1 .5-.5z"/>
+                                </svg>
+                                BY TIER
+                            </span>
+                        </div>
+
+                        <div class="podium-container">
+                            <!-- Silver (2nd) -->
+                            @{
+                                var silverTeam = Model.Rankings.FirstOrDefault(r => r.Rank == 2);
+                            }
+                            <div class="podium-box podium-silver">
+                                <div class="podium-rank">2</div>
+                                <div class="podium-image">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                                        <path d="M8 16A8 8 0 1 1 8 0a8 8 0 0 1 0 16zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"/>
+                                    </svg>
+                                </div>
+                                @if (silverTeam != null)
+                                {
+                                    <div class="podium-name">@silverTeam.TeamName</div>
+                                    <div class="podium-tier">SILVER TIER</div>
+                                }
+                            </div>
+
+                            <!-- Gold (1st) -->
+                            @{
+                                var goldTeam = Model.Rankings.FirstOrDefault(r => r.Rank == 1);
+                            }
+                            <div class="podium-box podium-gold">
+                                <div class="podium-rank">1</div>
+                                <div class="podium-image">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                                        <path d="M8 16A8 8 0 1 1 8 0a8 8 0 0 1 0 16zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"/>
+                                    </svg>
+                                </div>
+                                @if (goldTeam != null)
+                                {
+                                    <div class="podium-name">@goldTeam.TeamName</div>
+                                    <div class="podium-tier">CHAMPIONS</div>
+                                }
+                            </div>
+
+                            <!-- Bronze (3rd) -->
+                            @{
+                                var bronzeTeam = Model.Rankings.FirstOrDefault(r => r.Rank == 3);
+                            }
+                            <div class="podium-box podium-bronze">
+                                <div class="podium-rank">3</div>
+                                <div class="podium-image">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                                        <path d="M8 16A8 8 0 1 1 8 0a8 8 0 0 1 0 16zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"/>
+                                    </svg>
+                                </div>
+                                @if (bronzeTeam != null)
+                                {
+                                    <div class="podium-name">@bronzeTeam.TeamName</div>
+                                    <div class="podium-tier">BRONZE TIER</div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rankings Table -->
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0 leaderboard-table">
+                                    <thead>
+                                        <tr>
+                                            <th>RANK</th>
+                                            <th>TEAM NAME</th>
+                                            <th>PROJECT TITLE</th>
+                                            <th class="text-center">AVG TECHNICAL</th>
+                                            <th class="text-center">AVG INNOVATION</th>
+                                            <th class="text-end">FINAL AVERAGE SCORE</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var ranking in Model.Rankings)
+                                        {
+                                            var rowClass = ranking.Rank == 1 ? "rank-gold" : 
+                                                           ranking.Rank == 2 ? "rank-silver" : 
+                                                           ranking.Rank == 3 ? "rank-bronze" : "";
+
+                                            <tr class="@rowClass">
+                                                <td>
+                                                    @if (ranking.Rank <= 3)
+                                                    {
+                                                        <span class="rank-badge rank-@ranking.Rank">#@ranking.Rank</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>#@ranking.Rank</span>
+                                                    }
+                                                </td>
+                                                <td class="fw-semibold">@ranking.TeamName</td>
+                                                <td>Project Details</td>
+                                                <td class="text-center">@ranking.AverageTechnical</td>
+                                                <td class="text-center">@ranking.AverageInnovation</td>
+                                                <td class="text-end">
+                                                    <span class="leaderboard-score-badge">@ranking.FinalScore</span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+</section>
