@@ -1,22 +1,84 @@
-html {
-  font-size: 14px;
+* { box-sizing: border-box; }
+body { font-family: 'Open Sans', sans-serif; background: #F5F7FA; color: #4A5568; }
+h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; color: #1C2B3A; font-weight: 700; }
+a { color: #F4821F; text-decoration: none; }
+a:hover { color: #E07310; }
+
+.btn-primary { background: #F4821F; border-color: #F4821F; color: #fff; font-family: 'Poppins'; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; }
+.btn-primary:hover { background: #E07310; border-color: #E07310; color: #fff;}
+.btn-outline-primary { border-color: #1A2B4A; color: #1A2B4A; display: inline-flex; align-items: center; justify-content: center; }
+.btn-outline-primary:hover { background: #1A2B4A; color: #fff; }
+
+.card { border: none; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); overflow: hidden; background: #fff; }
+.card-header { background: #1A2B4A; color: #fff; font-family: 'Poppins'; border-radius: 10px 10px 0 0 !important; border-bottom: 3px solid #F4821F; padding: 1rem 1.25rem; }
+
+.badge-orange { background: #F4821F; color: #fff; padding: 0.35em 0.65em; font-size: 0.75em; font-weight: 700; border-radius: 0.25rem; }
+.badge-navy  { background: #1A2B4A; color: #fff; padding: 0.35em 0.65em; font-size: 0.75em; font-weight: 700; border-radius: 0.25rem; }
+
+.table thead th { background: #1E3A6E; color: #fff; font-family: 'Poppins'; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; border: none; padding: 12px; }
+.table-hover tbody tr:hover { background: #FFF3E8; }
+
+.form-control, .form-select { border: 1.5px solid #E8ECF0; border-radius: 6px; padding: 10px 14px; font-size: 14px; color: #1C2B3A; }
+.form-control:focus, .form-select:focus { border-color: #F4821F; box-shadow: 0 0 0 3px rgba(244,130,31,0.15); outline: 0; }
+.form-label { font-family: 'Poppins'; font-weight: 600; font-size: 13px; color: #4A5568; margin-bottom: 6px; }
+
+/* Custom Elements */
+.sidebar { background: #1A2B4A; color: #fff; min-height: 100vh; position: fixed; width: 250px; z-index: 1000; transition: transform 0.3s ease; top: 0; left: 0; }
+.sidebar-header { padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.sidebar-link { color: #fff; padding: 12px 20px; text-decoration: none; font-family: 'Poppins', sans-serif; font-size: 14px; display: flex; align-items: center; font-weight: 500; transition: background 0.2s; }
+.sidebar-link:hover { background: rgba(255,255,255,0.08); color: #fff; text-decoration: none; }
+.sidebar-link i { color: #A0AEC0; width: 26px; font-size: 16px; }
+.sidebar-link.active-admin { border-left: 4px solid #F4821F; background: rgba(244,130,31,0.15); color: #F4821F; }
+.sidebar-link.active-admin i { color: #F4821F; }
+.sidebar-link.active-judge { border-left: 4px solid #17A2B8; background: rgba(23,162,184,0.15); color: #17A2B8; }
+.sidebar-link.active-judge i { color: #17A2B8; }
+.sidebar-link.active-part { border-left: 4px solid #28A745; background: rgba(40,167,69,0.15); color: #28A745; }
+.sidebar-link.active-part i { color: #28A745; }
+
+.main-content { margin-left: 250px; padding: 30px; transition: margin 0.3s ease; min-height: 100vh; }
+.top-navbar { background: #fff; padding: 15px 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
+
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.show { transform: translateX(0); }
+  .main-content { margin-left: 0; padding: 15px; }
+  .top-navbar { padding: 15px; }
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
+/* Feature specific */
+.form-container { background: #fff; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); max-width: 480px; margin: 0 auto; overflow: hidden; }
+.form-container.wide { max-width: 520px; }
+.form-container-body { padding: 30px; }
+.hackathon-card { background: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: transform 0.3s, box-shadow 0.3s; height: 100%; display: flex; flex-direction: column; overflow: hidden; }
+.hackathon-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+.hackathon-card-body { padding: 20px; flex-grow: 1; }
+.top-bar-Published { border-top: 4px solid #F4821F; }
+.top-bar-Draft { border-top: 4px solid #718096; }
+.top-bar-Cancelled { border-top: 4px solid #DC3545; }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
+/* Dashboard Welcome */
+.welcome-banner { background: linear-gradient(135deg, #1A2B4A 0%, #1E3A6E 100%); color: #fff; border-radius: 10px; padding: 30px; margin-bottom: 30px; }
+.welcome-banner h2 { color: #fff; font-size: 28px; margin-bottom: 5px; }
+.stat-card { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: relative; overflow: hidden; }
+.stat-card-admin { border-left: 4px solid #F4821F; }
+.stat-card-judge { border-left: 4px solid #17A2B8; }
+.stat-card-part { border-left: 4px solid #28A745; }
 
-html {
-  position: relative;
-  min-height: 100%;
-}
+/* Medals for leaderboard */
+.medal-row-1 { border-left: 4px solid #FFD700 !important; }
+.medal-row-2 { border-left: 4px solid #C0C0C0 !important; }
+.medal-row-3 { border-left: 4px solid #CD7F32 !important; }
+.badge-1st { background: #FFD700; color: #000; font-weight: bold; border-radius: 50%; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; }
+.badge-2nd { background: #C0C0C0; color: #000; font-weight: bold; border-radius: 50%; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; }
+.badge-3rd { background: #CD7F32; color: #fff; font-weight: bold; border-radius: 50%; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; }
 
-body {
-  margin-bottom: 60px;
-}
+/* Progress bars */
+.score-progress { height: 6px; border-radius: 3px; background: #E8ECF0; margin-top: 4px; overflow: hidden; }
+.score-bar-inn { background: #F4821F; height: 100%; border-radius: 3px; }
+.score-bar-exe { background: #1E3A6E; height: 100%; border-radius: 3px; }
+.score-bar-pre { background: #17A2B8; height: 100%; border-radius: 3px; }
+
+/* General utility overrides */
+.text-navy { color: #1A2B4A; }
+.text-orange { color: #F4821F; }
+.bg-navy { background-color: #1A2B4A; }

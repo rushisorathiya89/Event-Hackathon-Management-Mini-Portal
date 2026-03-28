@@ -1,0 +1,110 @@
+@model Hackathon_Portal.Models.Hackathon
+@{
+    ViewData["Title"] = "Participants - " + Model.Title;
+    Layout = "~/Views/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid py-4">
+    <div class="mb-4">
+        <a asp-action="Hackathons" class="text-decoration-none text-primary" style="font-weight: 500;">
+            <i class="fas fa-arrow-left me-1"></i> Back to Hackathons
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px; border-left: 4px solid #1E3A6E !important;">
+        <div class="card-body p-4">
+            <h3 class="fw-bold text-navy mb-1" style="font-family: 'Poppins', sans-serif;">@Model.Title</h3>
+            <p class="text-muted m-0"><i class="fas fa-users me-2 text-primary"></i>@(Model.Teams?.Count ?? 0) teams registered</p>
+        </div>
+    </div>
+
+    @if (Model.Teams == null || !Model.Teams.Any())
+    {
+        <div class="text-center p-5 bg-white rounded shadow-sm border border-light">
+            <div class="d-inline-flex bg-light rounded-circle p-4 mb-3">
+                <i class="fas fa-users text-muted" style="font-size: 32px;"></i>
+            </div>
+            <h5 class="fw-bold text-navy" style="font-family: 'Poppins', sans-serif;">No Teams Yet</h5>
+            <p class="text-muted">No teams have registered for this hackathon.</p>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var team in Model.Teams)
+            {
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm hover-shadow transition" style="border-radius: 12px;">
+                        <div class="card-body p-4">
+                            <div class="row g-3">
+                                <div class="col-md-8">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <div class="bg-primary bg-opacity-10 text-primary rounded d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px;">
+                                            <i class="fas fa-users-cog fs-5"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="fw-bold text-navy m-0" style="font-family: 'Poppins', sans-serif;">@team.TeamName</h4>
+                                            <p class="text-primary fw-medium small m-0">
+                                                <i class="fas fa-project-diagram me-1"></i> @team.ProjectTitle
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p class="text-muted small ms-5 ps-3 mb-0 border-start border-2 border-primary border-opacity-25 py-1">@team.ProjectDescription</p>
+                                </div>
+                                <div class="col-md-4 text-md-end border-md-start">
+                                    <div class="p-2 p-md-0 ps-md-3">
+                                        <p class="text-muted small mb-1">Team Leader</p>
+                                        <p class="fw-bold text-dark mb-0">@team.Leader?.FullName</p>
+                                        <p class="text-muted small mb-0"><i class="fas fa-envelope me-1"></i>@team.Leader?.Email</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if (team.Members != null && team.Members.Any())
+                            {
+                                <div class="mt-4 pt-3 border-top">
+                                    <p class="fw-bold text-navy small mb-3">
+                                        Team Members
+                                        <span class="badge bg-light text-dark ms-2 rounded-pill border">@team.Members.Count</span>
+                                    </p>
+                                    <div class="row g-3">
+                                        @foreach (var member in team.Members)
+                                        {
+                                            <div class="col-sm-6 col-lg-4">
+                                                <div class="d-flex align-items-center gap-3 bg-light rounded p-2 border">
+                                                    <div class="bg-white rounded-circle d-flex align-items-center justify-content-center shadow-sm text-primary" style="width: 32px; height: 32px;">
+                                                        <i class="fas fa-user small"></i>
+                                                    </div>
+                                                    <div>
+                                                        <p class="fw-bold text-dark small m-0">@member.MemberName</p>
+                                                        <p class="text-muted m-0" style="font-size: 11px;">@member.MemberEmail</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="mt-3 pt-3 border-top text-muted text-end" style="font-size: 12px;">
+                                <span><i class="fas fa-clock me-1"></i> Registered on @team.CreatedAt.ToString("MMM dd, yyyy 'at' hh:mm tt")</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Apply hover effect to cards dynamically
+            document.querySelectorAll('.hover-shadow').forEach(c => {
+                c.addEventListener('mouseenter', e => e.currentTarget.classList.add('shadow'));
+                c.addEventListener('mouseleave', e => e.currentTarget.classList.remove('shadow'));
+            });
+        });
+    </script>
+}

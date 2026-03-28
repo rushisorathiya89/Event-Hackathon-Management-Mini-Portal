@@ -1,7 +1,36 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Event \u0026 Hackathon Management Mini-Portal\\Hackathon_Portal\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4113F5B3-C2A9-4CAC-9F63-6208FFD1CC34}|Hackathon_Portal\\Hackathon_Portal.csproj|d:\\event \u0026 hackathon management mini-portal\\hackathon_portal\\hackathon_portal\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4113F5B3-C2A9-4CAC-9F63-6208FFD1CC34}|Hackathon_Portal\\Hackathon_Portal.csproj|solutionrelative:hackathon_portal\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4113F5B3-C2A9-4CAC-9F63-6208FFD1CC34}|Hackathon_Portal\\Hackathon_Portal.csproj|d:\\event \u0026 hackathon management mini-portal\\hackathon_portal\\hackathon_portal\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4113F5B3-C2A9-4CAC-9F63-6208FFD1CC34}|Hackathon_Portal\\Hackathon_Portal.csproj|solutionrelative:hackathon_portal\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4113F5B3-C2A9-4CAC-9F63-6208FFD1CC34}|Hackathon_Portal\\Hackathon_Portal.csproj|d:\\event \u0026 hackathon management mini-portal\\hackathon_portal\\hackathon_portal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4113F5B3-C2A9-4CAC-9F63-6208FFD1CC34}|Hackathon_Portal\\Hackathon_Portal.csproj|solutionrelative:hackathon_portal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4113F5B3-C2A9-4CAC-9F63-6208FFD1CC34}|Hackathon_Portal\\Hackathon_Portal.csproj|d:\\event \u0026 hackathon management mini-portal\\hackathon_portal\\hackathon_portal\\migrations\\20260327130903_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4113F5B3-C2A9-4CAC-9F63-6208FFD1CC34}|Hackathon_Portal\\Hackathon_Portal.csproj|solutionrelative:hackathon_portal\\migrations\\20260327130903_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4113F5B3-C2A9-4CAC-9F63-6208FFD1CC34}|Hackathon_Portal\\Hackathon_Portal.csproj|d:\\event \u0026 hackathon management mini-portal\\hackathon_portal\\hackathon_portal\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4113F5B3-C2A9-4CAC-9F63-6208FFD1CC34}|Hackathon_Portal\\Hackathon_Portal.csproj|solutionrelative:hackathon_portal\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4113F5B3-C2A9-4CAC-9F63-6208FFD1CC34}|Hackathon_Portal\\Hackathon_Portal.csproj|d:\\event \u0026 hackathon management mini-portal\\hackathon_portal\\hackathon_portal\\views\\_adminlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4113F5B3-C2A9-4CAC-9F63-6208FFD1CC34}|Hackathon_Portal\\Hackathon_Portal.csproj|solutionrelative:hackathon_portal\\views\\_adminlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4113F5B3-C2A9-4CAC-9F63-6208FFD1CC34}|Hackathon_Portal\\Hackathon_Portal.csproj|d:\\event \u0026 hackathon management mini-portal\\hackathon_portal\\hackathon_portal\\views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4113F5B3-C2A9-4CAC-9F63-6208FFD1CC34}|Hackathon_Portal\\Hackathon_Portal.csproj|solutionrelative:hackathon_portal\\views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,6 +59,91 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "D:\\Event \u0026 Hackathon Management Mini-Portal\\Hackathon_Portal\\Hackathon_Portal\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "Hackathon_Portal\\Data\\AppDbContext.cs",
+              "ToolTip": "D:\\Event \u0026 Hackathon Management Mini-Portal\\Hackathon_Portal\\Hackathon_Portal\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "Hackathon_Portal\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-27T14:01:34.572Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "20260327130903_InitialCreate.cs",
+              "DocumentMoniker": "D:\\Event \u0026 Hackathon Management Mini-Portal\\Hackathon_Portal\\Hackathon_Portal\\Migrations\\20260327130903_InitialCreate.cs",
+              "RelativeDocumentMoniker": "Hackathon_Portal\\Migrations\\20260327130903_InitialCreate.cs",
+              "ToolTip": "D:\\Event \u0026 Hackathon Management Mini-Portal\\Hackathon_Portal\\Hackathon_Portal\\Migrations\\20260327130903_InitialCreate.cs",
+              "RelativeToolTip": "Hackathon_Portal\\Migrations\\20260327130903_InitialCreate.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-27T14:01:28.355Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "D:\\Event \u0026 Hackathon Management Mini-Portal\\Hackathon_Portal\\Hackathon_Portal\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "Hackathon_Portal\\Controllers\\AccountController.cs",
+              "ToolTip": "D:\\Event \u0026 Hackathon Management Mini-Portal\\Hackathon_Portal\\Hackathon_Portal\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "Hackathon_Portal\\Controllers\\AccountController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAG8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-27T09:37:42.831Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\Event \u0026 Hackathon Management Mini-Portal\\Hackathon_Portal\\Hackathon_Portal\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Hackathon_Portal\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\Event \u0026 Hackathon Management Mini-Portal\\Hackathon_Portal\\Hackathon_Portal\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Hackathon_Portal\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-27T05:44:27.89Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Event \u0026 Hackathon Management Mini-Portal\\Hackathon_Portal\\Hackathon_Portal\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Hackathon_Portal\\Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\Event \u0026 Hackathon Management Mini-Portal\\Hackathon_Portal\\Hackathon_Portal\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Hackathon_Portal\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-27T05:45:11.833Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "_ViewImports.cshtml",
+              "DocumentMoniker": "D:\\Event \u0026 Hackathon Management Mini-Portal\\Hackathon_Portal\\Hackathon_Portal\\Views\\_ViewImports.cshtml",
+              "RelativeDocumentMoniker": "Hackathon_Portal\\Views\\_ViewImports.cshtml",
+              "ToolTip": "D:\\Event \u0026 Hackathon Management Mini-Portal\\Hackathon_Portal\\Hackathon_Portal\\Views\\_ViewImports.cshtml",
+              "RelativeToolTip": "Hackathon_Portal\\Views\\_ViewImports.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-27T07:44:51.84Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "_AdminLayout.cshtml",
+              "DocumentMoniker": "D:\\Event \u0026 Hackathon Management Mini-Portal\\Hackathon_Portal\\Hackathon_Portal\\Views\\_AdminLayout.cshtml",
+              "RelativeDocumentMoniker": "Hackathon_Portal\\Views\\_AdminLayout.cshtml",
+              "ToolTip": "D:\\Event \u0026 Hackathon Management Mini-Portal\\Hackathon_Portal\\Hackathon_Portal\\Views\\_AdminLayout.cshtml",
+              "RelativeToolTip": "Hackathon_Portal\\Views\\_AdminLayout.cshtml",
+              "ViewState": "AgIAADMAAAAAAAAAAAAAAG8AAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-27T08:41:12.46Z"
             }
           ]
         },

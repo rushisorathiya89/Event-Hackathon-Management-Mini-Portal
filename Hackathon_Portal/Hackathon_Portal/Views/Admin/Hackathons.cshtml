@@ -1,0 +1,228 @@
+@model List<Hackathon_Portal.Models.Hackathon>
+@{
+    ViewData["Title"] = "All Hackathons";
+    Layout = "~/Views/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-3">
+        <div>
+            <h3 class="m-0 fw-bold text-navy" style="font-family: 'Poppins', sans-serif;">Manage Hackathons</h3>
+            <p class="text-muted m-0 small">Publish or cancel hackathon events</p>
+        </div>
+        <a asp-action="CreateHackathon" class="btn btn-primary px-4 py-2 fw-bold shadow-sm" style="background-color: #1A2B4A; border-color: #1A2B4A;">
+            <i class="fas fa-plus me-2"></i> New Hackathon
+        </a>
+    </div>
+
+    <!-- Search & Filter Bar -->
+    <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px;">
+        <div class="card-body p-3 p-md-4">
+            <div class="row g-3">
+                <div class="col-md-5 col-lg-6 relative position-relative">
+                    <i class="fas fa-search position-absolute text-muted" style="left: 20px; top: 50%; transform: translateY(-50%);"></i>
+                    <input type="text" id="searchInput" placeholder="Search by title, tech stack, judge..."
+                           class="form-control form-control-lg bg-light ps-5 border-0" />
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <select id="statusFilter" class="form-select form-select-lg bg-light border-0">
+                        <option value="">All Status</option>
+                        <option value="Draft">Draft</option>
+                        <option value="Published">Published</option>
+                    </select>
+                </div>
+                <div class="col-md-4 col-lg-3 d-flex align-items-center gap-3">
+                    <select id="deadlineFilter" class="form-select form-select-lg bg-light border-0 flex-grow-1">
+                        <option value="">All Deadlines</option>
+                        <option value="open">Registration Open</option>
+                        <option value="closed">Registration Closed</option>
+                    </select>
+                    <span id="resultCount" class="badge bg-navy rounded-pill align-self-center py-2 px-3 fw-bold">@Model.Count</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <div class="text-center p-5 bg-white rounded shadow-sm border border-light">
+            <div class="d-inline-flex bg-light rounded-circle p-4 mb-3">
+                <i class="fas fa-calendar-xmark text-muted" style="font-size: 32px;"></i>
+            </div>
+            <h5 class="fw-bold text-navy" style="font-family: 'Poppins', sans-serif;">No Hackathons</h5>
+            <p class="text-muted">Create your first hackathon to get started.</p>
+        </div>
+    }
+    else
+    {
+        <!-- No Results Message -->
+        <div id="noResults" class="d-none text-center p-5 bg-white rounded shadow-sm border border-light mb-4">
+            <i class="fas fa-search text-muted fs-1 mb-3"></i>
+            <h5 class="fw-bold text-navy" style="font-family: 'Poppins', sans-serif;">No matching hackathons</h5>
+            <p class="text-muted small">Try a different search or filter</p>
+        </div>
+
+        <div class="row g-4" id="hackathonGrid">
+            @foreach (var h in Model)
+            {
+                var isClosed = DateTime.Now > h.RegistrationDeadline;
+
+                <div class="col-12 col-md-6 col-xxl-4 hackathon-card"
+                     data-title="@h.Title.ToLower()"
+                     data-tech="@(h.TechStack?.ToLower() ?? "")"
+                     data-judge="@(h.Judge?.FullName?.ToLower() ?? "")"
+                     data-status="@h.Status"
+                     data-deadline-status="@(isClosed ? "closed" : "open")">
+                    <div class="card h-100 border-0 shadow-sm hover-shadow transition" style="border-radius: 12px;">
+                        <div class="card-body p-4 d-flex flex-column">
+                            <!-- Header -->
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="bg-primary bg-opacity-10 rounded d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                    <i class="fas fa-code text-primary fs-5"></i>
+                                </div>
+                                @if (h.Status == "Published")
+                                {
+                                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-1">Published</span>
+                                }
+                                else if (h.Status == "Draft")
+                                {
+                                    <span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 px-2 py-1 text-dark">Draft</span>
+                                }
+                            </div>
+
+                            <h5 class="fw-bold text-navy mb-2" style="font-family: 'Poppins', sans-serif;">@h.Title</h5>
+                            <p class="text-muted small flex-grow-1" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">@h.Description</p>
+
+                            @if (!string.IsNullOrEmpty(h.TechStack))
+                            {
+                                <div class="mt-2 mb-3 d-flex flex-wrap gap-1">
+                                    @foreach (var tech in h.TechStack.Split(','))
+                                    {
+                                        <span class="badge bg-light text-navy border font-monospace fw-normal">@tech.Trim()</span>
+                                    }
+                                </div>
+                            }
+
+                            <div class="mt-auto pt-3 border-top pb-3">
+                                <div class="d-flex flex-column gap-2 small text-muted">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-calendar-alt text-orange me-2" style="width: 16px;"></i>
+                                        <span>@h.StartDate.ToString("MMM dd") - @h.EndDate.ToString("MMM dd, yyyy")</span>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-clock text-orange me-2" style="width: 16px;"></i>
+                                        <span>Deadline: <span class="@(isClosed ? "text-danger fw-bold" : "")">@h.RegistrationDeadline.ToString("MMM dd, yyyy")</span></span>
+                                        @if (isClosed)
+                                        {
+                                            <span class="badge bg-danger ms-2">Closed</span>
+                                        }
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-gavel text-orange me-2" style="width: 16px;"></i>
+                                        <span>Judge: <span class="fw-medium">@(h.Judge?.FullName ?? "Not Assigned")</span></span>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-users text-orange me-2" style="width: 16px;"></i>
+                                        <span>@(h.Teams?.Count ?? 0) Teams Registered</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="d-flex gap-2 mt-3 pt-3 border-top flex-wrap">
+                                @if (h.Status == "Draft")
+                                {
+                                    <form asp-action="PublishHackathon" asp-route-id="@h.Id" method="post" class="flex-grow-1">
+                                        <button type="submit" class="btn btn-sm btn-success w-100 fw-bold">
+                                            <i class="fas fa-globe me-1"></i> Publish
+                                        </button>
+                                    </form>
+                                }
+
+                                <a asp-action="EditHackathon" asp-route-id="@h.Id"
+                                   class="btn btn-sm btn-outline-warning text-dark flex-grow-1 flex-md-grow-0" title="Edit">
+                                    <i class="fas fa-pen"></i> Edit
+                                </a>
+
+                                <a asp-action="ViewParticipants" asp-route-id="@h.Id"
+                                   class="btn btn-sm btn-outline-info flex-grow-1" title="View Teams">
+                                    <i class="fas fa-eye"></i> Teams
+                                </a>
+
+                                <a asp-action="Results" asp-route-id="@h.Id"
+                                   class="btn btn-sm btn-outline-primary flex-grow-1" title="Results">
+                                    <i class="fas fa-trophy"></i> Results
+                                </a>
+
+                                <form asp-action="CancelHackathon" asp-route-id="@h.Id" method="post" class="flex-grow-1 flex-md-grow-0"
+                                      onsubmit="return confirm('Are you sure you want to delete this hackathon? This cannot be undone.');">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger w-100 px-3" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.getElementById('searchInput');
+            const statusFilter = document.getElementById('statusFilter');
+            const deadlineFilter = document.getElementById('deadlineFilter');
+            const cards = document.querySelectorAll('.hackathon-card');
+            const noResults = document.getElementById('noResults');
+            const resultCount = document.getElementById('resultCount');
+
+            function filterCards() {
+                const query = (searchInput.value || "").toLowerCase().trim();
+                const status = statusFilter.value || "";
+                const deadline = deadlineFilter.value || "";
+                let visibleCount = 0;
+
+                cards.forEach(card => {
+                    const title = (card.dataset.title || "").toLowerCase();
+                    const tech = (card.dataset.tech || "").toLowerCase();
+                    const judge = (card.dataset.judge || "").toLowerCase();
+                    const cardStatus = card.dataset.status || "";
+                    const cardDeadline = card.dataset.deadlineStatus || "";
+
+                    const matchSearch = !query || title.includes(query) || tech.includes(query) || judge.includes(query);
+                    const matchStatus = !status || cardStatus === status;
+                    const matchDeadline = !deadline || cardDeadline === deadline;
+
+                    if (matchSearch && matchStatus && matchDeadline) {
+                        card.classList.remove('d-none');
+                        visibleCount++;
+                    } else {
+                        card.classList.add('d-none');
+                    }
+                });
+
+                if (noResults) {
+                    if (visibleCount === 0 && cards.length > 0) {
+                        noResults.classList.remove('d-none');
+                    } else {
+                        noResults.classList.add('d-none');
+                    }
+                }
+                
+                if (resultCount) {
+                    resultCount.textContent = visibleCount;
+                }
+            }
+
+            if(searchInput) searchInput.addEventListener('input', filterCards);
+            if(statusFilter) statusFilter.addEventListener('change', filterCards);
+            if(deadlineFilter) deadlineFilter.addEventListener('change', filterCards);
+
+            // Initial filter
+            filterCards();
+        });
+    </script>
+}

@@ -1,26 +1,33 @@
 using System.Diagnostics;
+using Hackathon_Portal.Data;
 using Hackathon_Portal.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hackathon_Portal.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly AppDbContext _db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(AppDbContext db)
         {
-            _logger = logger;
+            _db = db;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
+            var publishedHackathons = await _db.Hackathons
+                .Where(h => h.Status == "Published")
+                .OrderByDescending(h => h.CreatedAt)
+                .Take(6)
+                .ToListAsync();
 
-        public IActionResult Privacy()
-        {
-            return View();
+            ViewBag.TotalHackathons = await _db.Hackathons.CountAsync(h => h.Status == "Published");
+            ViewBag.TotalUsers = await _db.Users.CountAsync(u => u.Role == "Participant");
+            ViewBag.TotalTeams = await _db.Teams.CountAsync();
+
+            return View(publishedHackathons);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,0 +1,95 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/_ParticipantLayout.cshtml";
+}
+
+<!-- Welcome Banner -->
+<div class="welcome-banner text-white mb-4 position-relative overflow-hidden" style="background: linear-gradient(135deg, #1A2B4A 0%, #1E3A6E 100%);">
+    <div class="position-relative" style="z-index: 2;">
+        <h2 style="font-family: 'Poppins', sans-serif; font-weight: 700; color: #fff;">Welcome back, @Context.Session.GetString("UserName")! 👋</h2>
+        <p class="m-0" style="opacity: 0.8; font-family: 'Open Sans', sans-serif;">Ready to build something amazing? Browse hackathons and join your next challenge.</p>
+        <a asp-action="Hackathons" class="btn mt-3 px-4 py-2 text-white" style="background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); font-weight: 600;">
+            <i class="fas fa-search me-2 text-orange"></i> Browse Hackathons
+        </a>
+    </div>
+    <i class="fas fa-laptop-code position-absolute" style="font-size: 140px; right: 20px; bottom: -20px; opacity: 0.05;"></i>
+</div>
+
+<!-- Stats Grid -->
+<div class="row g-4 mb-4">
+    <div class="col-md-6">
+        <div class="stat-card stat-card-part">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="m-0 fw-bold" style="color: #1C2B3A; font-family: 'Poppins', sans-serif;">@ViewBag.TotalPublished</h3>
+                    <p class="text-muted small m-0 text-uppercase fw-bold mt-1" style="letter-spacing: 0.5px;">Available Hackathons</p>
+                </div>
+                <div class="bg-light rounded d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                    <i class="fas fa-calendar-alt fs-4 text-success"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="stat-card stat-card-part">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="m-0 fw-bold" style="color: #1C2B3A; font-family: 'Poppins', sans-serif;">@ViewBag.MyTeams</h3>
+                    <p class="text-muted small m-0 text-uppercase fw-bold mt-1" style="letter-spacing: 0.5px;">My Registrations</p>
+                </div>
+                <div class="bg-light rounded d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                    <i class="fas fa-clipboard-check fs-4 text-success"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Nav -->
+<div class="row g-4">
+    <div class="col-md-4">
+        <a asp-action="Hackathons" class="text-decoration-none">
+            <div class="card h-100 hackathon-card p-4 border-0">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="bg-light rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 45px; height: 45px;">
+                        <i class="fas fa-search fs-5" style="color: #1E3A6E;"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold m-0 text-navy" style="font-family: 'Poppins', sans-serif; font-size: 16px;">Browse Events</h5>
+                        <p class="text-muted small m-0 mt-1">Find hackathons to join</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a asp-action="MyHackathons" class="text-decoration-none">
+            <div class="card h-100 hackathon-card p-4 border-0">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="bg-light rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 45px; height: 45px;">
+                        <i class="fas fa-users fs-5" style="color: #F4821F;"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold m-0 text-navy" style="font-family: 'Poppins', sans-serif; font-size: 16px;">My Teams</h5>
+                        <p class="text-muted small m-0 mt-1">View your registrations</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a href="#" class="text-decoration-none">
+            <div class="card h-100 hackathon-card p-4 border-0">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="bg-light rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 45px; height: 45px;">
+                        <i class="fas fa-user-circle fs-5 text-success"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold m-0 text-navy" style="font-family: 'Poppins', sans-serif; font-size: 16px;">My Profile</h5>
+                        <p class="text-muted small m-0 mt-1">View account details</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

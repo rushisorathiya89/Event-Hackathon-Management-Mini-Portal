@@ -1,0 +1,140 @@
+<!-- Notification Bell + Dropdown (Include in layouts) -->
+<div class="position-relative" id="notificationWrapper">
+    <button onclick="toggleNotifications()" class="btn btn-link text-muted p-2 text-decoration-none dropdown-toggle-cursor" id="notifBell" style="position: relative;">
+        <i class="fas fa-bell fs-5"></i>
+        <span id="notifBadge" class="d-none position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.65rem;">
+            0
+        </span>
+    </button>
+
+    <!-- Dropdown -->
+    <div id="notifDropdown" class="d-none position-absolute end-0 mt-2 bg-white rounded shadow-lg border-light z-3" style="width: 320px; max-height: 480px; overflow: hidden; z-index: 1050;">
+        <div class="p-3 border-bottom d-flex align-items-center justify-content-between">
+            <h6 class="m-0 fw-bold text-dark">Notifications</h6>
+            <div class="d-flex gap-2">
+                <button onclick="markAllRead()" class="btn btn-link text-primary p-0 text-decoration-none" style="font-size: 12px;">Mark all read</button>
+                @* <a href="/Notification/All" class="text-muted text-decoration-none" style="font-size: 12px;">View all</a> *@
+            </div>
+        </div>
+        <div id="notifList" class="overflow-auto border-bottom" style="max-height: 380px;">
+            <div class="p-4 text-center text-muted small">
+                <i class="fas fa-bell-slash fs-3 mb-2 d-block"></i>
+                No notifications
+            </div>
+        </div>
+        <a href="/Notification/All" class="d-block text-center p-2 text-muted text-decoration-none small" style="background: #f8f9fa;">View all notifications</a>
+    </div>
+</div>
+
+<script>
+    let notifOpen = false;
+
+    function toggleNotifications() {
+        notifOpen = !notifOpen;
+        const dropdown = document.getElementById('notifDropdown');
+        if (notifOpen) {
+            dropdown.classList.remove('d-none');
+            loadNotifications();
+        } else {
+            dropdown.classList.add('d-none');
+        }
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function (e) {
+        const wrapper = document.getElementById('notificationWrapper');
+        if (wrapper && !wrapper.contains(e.target)) {
+            notifOpen = false;
+            document.getElementById('notifDropdown').classList.add('d-none');
+        }
+    });
+
+    async function loadNotifications() {
+        try {
+            const res = await fetch('/Notification/GetNotifications');
+            const data = await res.json();
+
+            // Update badge
+            const badge = document.getElementById('notifBadge');
+            if (data.unreadCount > 0) {
+                badge.textContent = data.unreadCount > 9 ? '9+' : data.unreadCount;
+                badge.classList.remove('d-none');
+            } else {
+                badge.classList.add('d-none');
+            }
+
+            // Render list
+            const list = document.getElementById('notifList');
+            if (data.notifications.length === 0) {
+                list.innerHTML = `<div class="p-4 text-center text-muted small">
+                    <i class="fas fa-bell-slash fs-3 mb-2 d-block"></i>No notifications</div>`;
+                return;
+            }
+
+            list.innerHTML = data.notifications.map(n => {
+                const timeAgo = getTimeAgo(new Date(n.createdAt));
+                const bgClass = n.isRead ? 'bg-white' : 'bg-primary bg-opacity-10';
+                const dotClass = n.isRead ? '' : '<span class="bg-primary rounded-circle ms-2" style="width: 8px; height: 8px; display: inline-block;"></span>';
+                const iconColor = n.type === 'Success' ? 'text-success' :
+                                  n.type === 'Warning' ? 'text-warning' :
+                                  n.type === 'Alert' ? 'text-danger' : 'text-primary';
+
+                return `<div class="p-3 border-bottom d-flex align-items-start gap-3 user-select-none ${bgClass}" 
+                             style="cursor: pointer;"
+                             onclick="handleNotifClick(${n.id}, '${n.link || ''}')">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-center flex-shrink-0" style="width: 32px; height: 32px;">
+                        <i class="fas ${n.icon} ${iconColor} small"></i>
+                    </div>
+                    <div class="flex-grow-1" style="min-width: 0;">
+                        <p class="mb-1 text-dark small lh-sm">${n.message}</p>
+                        <p class="m-0 text-muted" style="font-size: 11px;">${timeAgo}</p>
+                    </div>
+                    <div class="d-flex align-items-center h-100">${dotClass}</div>
+                </div>`;
+            }).join('');
+        } catch (e) {
+            console.error('Failed to load notifications', e);
+        }
+    }
+
+    async function handleNotifClick(id, link) {
+        await fetch('/Notification/MarkAsRead?id=' + id, { method: 'POST' });
+        if (link && link !== 'null' && link !== '') {
+            window.location.href = link;
+        } else {
+            loadNotifications();
+        }
+    }
+
+    async function markAllRead() {
+        await fetch('/Notification/MarkAllRead', { method: 'POST' });
+        loadNotifications();
+    }
+
+    function getTimeAgo(date) {
+        const seconds = Math.floor((new Date() - date) / 1000);
+        if (seconds < 60) return 'Just now';
+        const minutes = Math.floor(seconds / 60);
+        if (minutes < 60) return minutes + 'm ago';
+        const hours = Math.floor(minutes / 60);
+        if (hours < 24) return hours + 'h ago';
+        const days = Math.floor(hours / 24);
+        if (days < 7) return days + 'd ago';
+        return date.toLocaleDateString();
+    }
+
+    // Auto-load badge on page load
+    (async function () {
+        try {
+            const res = await fetch('/Notification/GetNotifications');
+            if (res.ok) {
+                const data = await res.json();
+                const badge = document.getElementById('notifBadge');
+                if (data.unreadCount > 0) {
+                    badge.textContent = data.unreadCount > 9 ? '9+' : data.unreadCount;
+                    badge.classList.remove('d-none');
+                }
+            }
+        } catch (e) { }
+    })();
+</script>

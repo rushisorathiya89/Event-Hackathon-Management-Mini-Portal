@@ -1,0 +1,89 @@
+@model Hackathon_Portal.Models.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="form-container mb-4">
+                <div class="card-header text-center py-4">
+                    <div class="mb-2">
+                        <i class="fas fa-bolt text-warning fs-3"></i>
+                    </div>
+                    <h3 class="m-0" style="color: #fff;">Welcome Back</h3>
+                    <p class="small text-light m-0 mt-1" style="opacity: 0.8;">Sign in to your HackPortal account</p>
+                </div>
+                
+                <div class="form-container-body bg-white p-4 p-md-5">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger" style="background: #FFEBEE; color: #C62828; border: none;">
+                            @Html.ValidationSummary(false)
+                        </div>
+                    }
+
+                    <form asp-action="Login" method="post" novalidate>
+                        @Html.AntiForgeryToken()
+
+                        <div class="mb-4">
+                            <label class="form-label" asp-for="Email">Email Address</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0" style="border-color: #E8ECF0; color: #A0AEC0;">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                                <input asp-for="Email" type="email" class="form-control border-start-0 ps-0" placeholder="you@example.com" />
+                            </div>
+                            <span asp-validation-for="Email" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label" asp-for="Password">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0" style="border-color: #E8ECF0; color: #A0AEC0;">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                                <input asp-for="Password" type="password" class="form-control border-start-0 ps-0" placeholder="••••••••" />
+                            </div>
+                            <span asp-validation-for="Password" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <div class="d-grid mt-5">
+                            <button type="submit" class="btn btn-primary btn-lg p-3" style="font-size: 15px;">
+                                <i class="fas fa-sign-in-alt me-2"></i> Sign In
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <p class="text-muted small">
+                            Don't have an account?
+                            <a asp-controller="Account" asp-action="Register" class="text-orange fw-bold text-decoration-none">Register here</a>
+                        </p>
+                    </div>
+
+                    <!-- Demo Credentials -->
+                    <div class="bg-light p-3 rounded mt-4 border text-center">
+                        <p class="small fw-bold text-muted mb-2">Demo Credentials</p>
+                        <div class="small text-muted" style="font-size: 12px;">
+                            <p class="mb-1"><strong>Admin:</strong> admin@hackportal.com / Admin@123</p>
+                            <p class="mb-1"><strong>Judge:</strong> Created by Admin</p>
+                            <p class="mb-0"><strong>Participant:</strong> Register to test</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <a href="/" class="text-muted text-decoration-none small">
+                    <i class="fas fa-arrow-left me-1"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,83 @@
+@model List<Hackathon_Portal.Models.Notification>
+@{
+    ViewData["Title"] = "All Notifications";
+    Layout = ViewBag.Layout;
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-3">
+                <div>
+                    <h3 class="m-0 fw-bold text-navy" style="font-family: 'Poppins', sans-serif;">All Notifications</h3>
+                    <p class="text-muted m-0 small">@Model.Count notifications in your inbox</p>
+                </div>
+                @if (Model.Any(n => !n.IsRead))
+                {
+                    <form method="post" action="/Notification/MarkAllRead">
+                        <button type="submit" class="btn btn-sm btn-outline-primary fw-bold px-3">
+                            <i class="fas fa-check-double me-1"></i> Mark all as read
+                        </button>
+                    </form>
+                }
+            </div>
+
+            @if (Model.Count == 0)
+            {
+                <div class="text-center p-5 bg-white rounded shadow-sm border border-light">
+                    <div class="d-inline-flex bg-light rounded-circle p-4 mb-3">
+                        <i class="fas fa-bell-slash text-muted" style="font-size: 32px;"></i>
+                    </div>
+                    <h5 class="fw-bold text-navy" style="font-family: 'Poppins', sans-serif;">No Notifications</h5>
+                    <p class="text-muted">You're all caught up! Check back later for updates.</p>
+                </div>
+            }
+            else
+            {
+                <div class="list-group shadow-sm border-0" style="border-radius: 12px; overflow: hidden;">
+                    @foreach (var n in Model)
+                    {
+                        var iconColor = n.Type == "Success" ? "text-success bg-success bg-opacity-10" :
+                                        n.Type == "Warning" ? "text-warning bg-warning bg-opacity-10" :
+                                        n.Type == "Alert" ? "text-danger bg-danger bg-opacity-10" : "text-primary bg-primary bg-opacity-10";
+                        
+                        var itemClass = n.IsRead ? "bg-white" : "bg-primary bg-opacity-10 border-start border-primary border-4";
+
+                        <div class="list-group-item @(n.IsRead ? "" : "border-primary border-opacity-25") p-4 transition-all">
+                            <div class="d-flex gap-3">
+                                <div class="rounded d-flex align-items-center justify-content-center flex-shrink-0 @iconColor shadow-sm" style="width: 45px; height: 45px;">
+                                    <i class="fas @n.Icon fs-5"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-start gap-2">
+                                        <p class="mb-1 text-navy @(n.IsRead ? "" : "fw-bold")">@n.Message</p>
+                                        @if (!string.IsNullOrEmpty(n.Link))
+                                        {
+                                            <a href="@n.Link" class="btn btn-sm btn-link text-orange p-0 fw-bold text-decoration-none small">
+                                                View <i class="fas fa-external-link-alt ms-1" style="font-size: 10px;"></i>
+                                            </a>
+                                        }
+                                    </div>
+                                    <p class="text-muted m-0 small">
+                                        <i class="fas fa-clock me-1 text-orange"></i> @n.CreatedAt.ToString("MMM dd, yyyy 'at' hh:mm tt")
+                                    </p>
+                                </div>
+                                @if (!n.IsRead)
+                                {
+                                    <div class="bg-orange rounded-circle" style="width: 10px; height: 10px; margin-top: 5px;"></div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .list-group-item { border-left: 1px solid rgba(0,0,0,.125); border-right: 1px solid rgba(0,0,0,.125); }
+    .list-group-item:hover { background-color: #F8FAFC; }
+    .transition-all { transition: all 0.2s ease-in-out; }
+    .bg-orange { background-color: #F4821F; }
+</style>

@@ -1,0 +1,101 @@
+@model Hackathon_Portal.Models.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="form-container mb-4">
+                <div class="card-header text-center py-4">
+                    <div class="mb-2">
+                        <i class="fas fa-user-plus text-warning fs-3"></i>
+                    </div>
+                    <h3 class="m-0" style="color: #fff;">Create Account</h3>
+                    <p class="small text-light m-0 mt-1" style="opacity: 0.8;">Join HackPortal as a Participant</p>
+                </div>
+                
+                <div class="form-container-body bg-white p-4 p-md-5">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger" style="background: #FFEBEE; color: #C62828; border: none;">
+                            @Html.ValidationSummary(false)
+                        </div>
+                    }
+
+                    <form asp-action="Register" method="post" novalidate>
+                        @Html.AntiForgeryToken()
+
+                        <div class="mb-4">
+                            <label class="form-label" asp-for="FullName">Full Name</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0" style="border-color: #E8ECF0; color: #A0AEC0;">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                                <input asp-for="FullName" class="form-control border-start-0 ps-0" placeholder="John Doe" />
+                            </div>
+                            <span asp-validation-for="FullName" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label" asp-for="Email">Email Address</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0" style="border-color: #E8ECF0; color: #A0AEC0;">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                                <input asp-for="Email" type="email" class="form-control border-start-0 ps-0" placeholder="you@example.com" />
+                            </div>
+                            <span asp-validation-for="Email" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label" asp-for="Password">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0" style="border-color: #E8ECF0; color: #A0AEC0;">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                                <input asp-for="Password" type="password" class="form-control border-start-0 ps-0" placeholder="••••••••" />
+                            </div>
+                            <span asp-validation-for="Password" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label" asp-for="ConfirmPassword">Confirm Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0" style="border-color: #E8ECF0; color: #A0AEC0;">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                                <input asp-for="ConfirmPassword" type="password" class="form-control border-start-0 ps-0" placeholder="••••••••" />
+                            </div>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <div class="d-grid mt-5">
+                            <button type="submit" class="btn btn-primary btn-lg p-3" style="font-size: 15px;">
+                                <i class="fas fa-rocket me-2"></i> Create Account
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <p class="text-muted small">
+                            Already have an account?
+                            <a asp-controller="Account" asp-action="Login" class="text-orange fw-bold text-decoration-none">Sign In</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <a href="/" class="text-muted text-decoration-none small">
+                    <i class="fas fa-arrow-left me-1"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

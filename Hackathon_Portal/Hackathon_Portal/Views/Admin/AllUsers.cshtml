@@ -1,0 +1,147 @@
+@model List<Hackathon_Portal.Models.User>
+@{
+    ViewData["Title"] = "All Users";
+    Layout = "~/Views/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid py-4">
+    <div class="card border-0 shadow-sm" style="border-radius: 12px; overflow: hidden;">
+        <div class="card-header bg-white border-bottom p-4">
+            <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-3">
+                <div>
+                    <h3 class="m-0 fw-bold text-navy" style="font-family: 'Poppins', sans-serif;">Registered Users</h3>
+                    <p class="text-muted m-0 small"><span id="resultCount" class="fw-bold">@Model.Count</span> total users</p>
+                </div>
+                <a asp-action="AddJudge" class="btn btn-warning fw-bold text-dark shadow-sm">
+                    <i class="fas fa-gavel me-1"></i> Add Judge
+                </a>
+            </div>
+
+            <!-- Search & Filter -->
+            <div class="row g-3">
+                <div class="col-md-7 col-lg-8 position-relative">
+                    <i class="fas fa-search position-absolute text-muted" style="left: 20px; top: 50%; transform: translateY(-50%);"></i>
+                    <input type="text" id="userSearch" placeholder="Search by name or email..."
+                           class="form-control form-control-lg bg-light ps-5 border-0" />
+                </div>
+                <div class="col-md-5 col-lg-4">
+                    <select id="roleFilter" class="form-select form-select-lg bg-light border-0">
+                        <option value="">All Roles</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Judge">Judge</option>
+                        <option value="Participant">Participant</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light text-muted small">
+                    <tr>
+                        <th class="ps-4 py-3 fw-bold border-0">#</th>
+                        <th class="py-3 fw-bold border-0">Name</th>
+                        <th class="py-3 fw-bold border-0">Email</th>
+                        <th class="py-3 fw-bold border-0">Role</th>
+                        <th class="pe-4 py-3 fw-bold border-0">Joined</th>
+                    </tr>
+                </thead>
+                <tbody id="userTableBody" class="border-top-0">
+                    @{ int i = 1; }
+                    @foreach (var user in Model)
+                    {
+                        var avatarColor = user.Role == "Admin" ? "bg-primary" : user.Role == "Judge" ? "bg-warning text-dark" : "bg-success";
+                        
+                        <tr class="user-row transition"
+                            data-name="@user.FullName.ToLower()"
+                            data-email="@user.Email.ToLower()"
+                            data-role="@user.Role">
+                            <td class="ps-4 py-3 text-muted small">@i</td>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="@avatarColor rounded-circle d-flex align-items-center justify-content-center text-white fw-bold shadow-sm" style="width: 35px; height: 35px; font-size: 14px;">
+                                        @(string.IsNullOrEmpty(user.FullName) ? "?" : user.FullName[0].ToString())
+                                    </div>
+                                    <span class="fw-medium text-navy">@user.FullName</span>
+                                </div>
+                            </td>
+                            <td class="py-3 text-muted small">@user.Email</td>
+                            <td class="py-3">
+                                @if (user.Role == "Admin")
+                                {
+                                    <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2 py-1 rounded-pill">Admin</span>
+                                }
+                                else if (user.Role == "Judge")
+                                {
+                                    <span class="badge bg-warning bg-opacity-10 text-warning text-dark border border-warning border-opacity-25 px-2 py-1 rounded-pill">Judge</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-1 rounded-pill">Participant</span>
+                                }
+                            </td>
+                            <td class="pe-4 py-3 text-muted small">@user.CreatedAt.ToString("MMM dd, yyyy")</td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+            </table>
+
+            <!-- No Results -->
+            <div id="noUserResults" class="d-none p-5 text-center">
+                <i class="fas fa-user-slash text-muted fs-1 mb-3"></i>
+                <h5 class="fw-bold text-navy" style="font-family: 'Poppins', sans-serif;">No matching users</h5>
+                <p class="text-muted small">Try a different search or filter</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const userSearch = document.getElementById('userSearch');
+            const roleFilter = document.getElementById('roleFilter');
+            const rows = document.querySelectorAll('.user-row');
+            const noUserResults = document.getElementById('noUserResults');
+            const resultCount = document.getElementById('resultCount');
+
+            function filterUsers() {
+                const query = (userSearch.value || "").toLowerCase().trim();
+                const role = roleFilter.value || "";
+                let visibleCount = 0;
+
+                rows.forEach(row => {
+                    const name = (row.dataset.name || "").toLowerCase();
+                    const email = (row.dataset.email || "").toLowerCase();
+                    const rowRole = row.dataset.role || "";
+
+                    const matchSearch = !query || name.includes(query) || email.includes(query);
+                    const matchRole = !role || rowRole === role;
+
+                    if (matchSearch && matchRole) {
+                        row.classList.remove('d-none');
+                        visibleCount++;
+                    } else {
+                        row.classList.add('d-none');
+                    }
+                });
+
+                if (noUserResults) {
+                    if (visibleCount === 0 && rows.length > 0) {
+                        noUserResults.classList.remove('d-none');
+                    } else {
+                        noUserResults.classList.add('d-none');
+                    }
+                }
+                if (resultCount) resultCount.textContent = visibleCount;
+            }
+
+            if(userSearch) userSearch.addEventListener('input', filterUsers);
+            if(roleFilter) roleFilter.addEventListener('change', filterUsers);
+
+            // Initial filter
+            filterUsers();
+        });
+    </script>
+}

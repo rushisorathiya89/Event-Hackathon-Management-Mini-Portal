@@ -1,0 +1,172 @@
+@model Hackathon_Portal.Models.ViewModels.HackathonViewModel
+@{
+    ViewData["Title"] = "Create Hackathon";
+    Layout = "~/Views/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-xl-8 col-lg-10">
+            <div class="form-container">
+                <div class="card-header bg-navy text-white p-4 d-flex align-items-center gap-3">
+                    <div class="bg-white rounded d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                        <i class="fas fa-plus-circle fs-4 text-orange"></i>
+                    </div>
+                    <div>
+                        <h4 class="m-0 fw-bold" style="font-family: 'Poppins', sans-serif;">New Hackathon</h4>
+                        <p class="m-0 small text-light" style="opacity: 0.8;">Set up a new event and configure judging parameters</p>
+                    </div>
+                </div>
+
+                <div class="form-container-body bg-white p-4 p-md-5">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger" style="background: #FFEBEE; color: #C62828; border: none;">
+                            @Html.ValidationSummary(false)
+                        </div>
+                    }
+
+                    <form asp-action="CreateHackathon" method="post" novalidate>
+                        @Html.AntiForgeryToken()
+
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <label class="form-label fw-bold text-navy" asp-for="Title">Hackathon Title <span class="text-danger">*</span></label>
+                                <input asp-for="Title" class="form-control form-control-lg bg-light" placeholder="e.g., .NET Innovation Challenge" />
+                                <span asp-validation-for="Title" class="text-danger small mt-1 d-block"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label fw-bold text-navy" asp-for="Description">Description</label>
+                                <textarea asp-for="Description" class="form-control bg-light" rows="4" placeholder="Describe the hackathon objectives and rules..."></textarea>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label fw-bold text-navy" asp-for="TechStack">Tech Stack</label>
+                                <input asp-for="TechStack" class="form-control bg-light" placeholder="e.g., .NET, React, Azure, SQL Server" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-navy" asp-for="StartDate">Start Date <span class="text-danger">*</span></label>
+                                <input asp-for="StartDate" type="date" id="startDate" class="form-control bg-light" />
+                                <span asp-validation-for="StartDate" class="text-danger small mt-1 d-block"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-navy" asp-for="EndDate">End Date <span class="text-danger">*</span></label>
+                                <input asp-for="EndDate" type="date" id="endDate" class="form-control bg-light" />
+                                <span asp-validation-for="EndDate" class="text-danger small mt-1 d-block"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-navy" asp-for="RegistrationDeadline">
+                                    <i class="fas fa-clock text-danger me-1"></i> Registration Deadline <span class="text-danger">*</span>
+                                </label>
+                                <input asp-for="RegistrationDeadline" type="date" id="regDeadline" class="form-control bg-light" />
+                                <span asp-validation-for="RegistrationDeadline" class="text-danger small mt-1 d-block"></span>
+                                <p id="deadlineHint" class="small text-muted mt-1 mb-0">
+                                    <i class="fas fa-info-circle me-1"></i> Must be before start date.
+                                </p>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-navy" asp-for="MaxTeamSize">Max Team Size</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0"><i class="fas fa-users text-muted"></i></span>
+                                    <input asp-for="MaxTeamSize" type="number" min="2" max="10" class="form-control bg-light border-start-0 ps-0" />
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-4 pt-3 border-top">
+                                <label class="form-label fw-bold text-navy" asp-for="JudgeId">
+                                    <i class="fas fa-gavel text-orange me-1"></i> Assign Judge
+                                </label>
+                                <select asp-for="JudgeId" class="form-select form-select-lg bg-light">
+                                    <option value="">-- Select Judge (Optional) --</option>
+                                    @if (Model.AvailableJudges != null)
+                                    {
+                                        @foreach (var judge in Model.AvailableJudges)
+                                        {
+                                            <option value="@judge.Id">@judge.FullName (@judge.Email)</option>
+                                        }
+                                    }
+                                </select>
+                                <p class="small text-muted mt-2">
+                                    No judges available? <a asp-action="AddJudge" class="text-orange fw-bold text-decoration-none">Register a new judge</a>
+                                </p>
+                            </div>
+
+                            <div class="col-12 mt-4 pt-3 d-flex gap-3">
+                                <button type="submit" class="btn btn-primary btn-lg px-5">
+                                    <i class="fas fa-plus me-2"></i> Create Hackathon
+                                </button>
+                                <a asp-action="Hackathons" class="btn btn-outline-secondary btn-lg px-4">
+                                    Cancel
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        const startDateInput = document.getElementById('startDate');
+        const endDateInput = document.getElementById('endDate');
+        const deadlineInput = document.getElementById('regDeadline');
+        const deadlineHint = document.getElementById('deadlineHint');
+
+        function updateDeadlineConstraint() {
+            const startVal = startDateInput.value;
+            if (startVal) {
+                // Max deadline = day before start date
+                const startDate = new Date(startVal);
+                startDate.setDate(startDate.getDate() - 1);
+                const maxDate = startDate.toISOString().split('T')[0];
+                deadlineInput.setAttribute('max', maxDate);
+
+                // Auto-fill deadline if empty or after start
+                if (!deadlineInput.value || deadlineInput.value >= startVal) {
+                    deadlineInput.value = maxDate;
+                }
+
+                deadlineHint.innerHTML = '<i class="fas fa-info-circle me-1"></i> Must be on or before <strong>' +
+                    new Date(maxDate + 'T00:00').toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'}) + '</strong>';
+            }
+        }
+
+        function updateEndDateConstraint() {
+            const startVal = startDateInput.value;
+            if (startVal) {
+                endDateInput.setAttribute('min', startVal);
+                if (endDateInput.value && endDateInput.value < startVal) {
+                    endDateInput.value = startVal;
+                }
+            }
+        }
+
+        startDateInput.addEventListener('change', () => {
+            updateDeadlineConstraint();
+            updateEndDateConstraint();
+        });
+
+        deadlineInput.addEventListener('change', () => {
+            const startVal = startDateInput.value;
+            if (startVal && deadlineInput.value >= startVal) {
+                const startDate = new Date(startVal);
+                startDate.setDate(startDate.getDate() - 1);
+                deadlineInput.value = startDate.toISOString().split('T')[0];
+                deadlineHint.innerHTML = '<i class="fas fa-exclamation-triangle me-1 text-warning"></i> <span class="text-warning fw-bold">Deadline must be before the start date. Auto-corrected.</span>';
+                setTimeout(() => updateDeadlineConstraint(), 3000);
+            }
+        });
+
+        // Run on page load
+        updateDeadlineConstraint();
+        updateEndDateConstraint();
+    </script>
+}

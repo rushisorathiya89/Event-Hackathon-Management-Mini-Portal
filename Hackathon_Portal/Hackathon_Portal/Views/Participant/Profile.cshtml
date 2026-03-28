@@ -1,0 +1,57 @@
+@model Hackathon_Portal.Models.User
+@{
+    ViewData["Title"] = "My Profile";
+    Layout = "~/Views/_ParticipantLayout.cshtml";
+}
+
+<div class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card border-0 shadow-sm" style="border-radius: 12px; overflow: hidden;">
+                <div class="card-header bg-navy text-white text-center p-5 border-0">
+                    <div class="bg-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 shadow" style="width: 100px; height: 100px;">
+                        <span class="display-4 fw-bold text-navy">@(string.IsNullOrEmpty(Model.FullName) ? "?" : Model.FullName[0].ToString())</span>
+                    </div>
+                    <h3 class="fw-bold mb-1" style="font-family: 'Poppins', sans-serif;">@Model.FullName</h3>
+                    <p class="m-0 text-light small text-opacity-75">@Model.Email</p>
+                    <span class="badge bg-warning text-dark mt-3 px-3 py-2 rounded-pill fw-bold">
+                        <i class="fas fa-user-graduate me-1"></i> Participant
+                    </span>
+                </div>
+
+                <div class="card-body p-4 p-md-5 bg-white">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item d-flex justify-content-between align-items-center py-3 px-0 border-light">
+                            <div>
+                                <i class="fas fa-envelope text-orange me-2"></i>
+                                <span class="text-muted small fw-bold text-uppercase">Email Address</span>
+                            </div>
+                            <span class="text-navy fw-medium">@Model.Email</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center py-3 px-0 border-light">
+                            <div>
+                                <i class="fas fa-calendar-alt text-orange me-2"></i>
+                                <span class="text-muted small fw-bold text-uppercase">Account Created</span>
+                            </div>
+                            <span class="text-navy fw-medium">@Model.CreatedAt.ToString("MMMM dd, yyyy")</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center py-3 px-0 border-light">
+                            <div>
+                                <i class="fas fa-rocket text-orange me-2"></i>
+                                <span class="text-muted small fw-bold text-uppercase">Hackathons Joined</span>
+                            </div>
+                            <span class="badge bg-navy rounded-pill">@ViewBag.TeamCount</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-5 text-center">
+                        <p class="text-muted small mb-4 italic">To update your details, please contact the RK University Hackathon Administration.</p>
+                        <a href="/" class="btn btn-outline-primary px-4 fw-bold">
+                            <i class="fas fa-home me-1"></i> Return Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

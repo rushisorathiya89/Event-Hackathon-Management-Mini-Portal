@@ -1,0 +1,88 @@
+@model List<Hackathon_Portal.Models.Hackathon>
+@{
+    ViewData["Title"] = "My Assigned Hackathons";
+    Layout = "~/Views/_JudgeLayout.cshtml";
+}
+
+<div class="container-fluid py-4">
+    <div class="mb-4">
+        <h3 class="m-0 fw-bold text-navy" style="font-family: 'Poppins', sans-serif;">My Assigned Hackathons</h3>
+        <p class="text-muted m-0 small">Hackathons where you are the assigned judge</p>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <div class="text-center p-5 bg-white rounded shadow-sm border border-light">
+            <div class="d-inline-flex bg-light rounded-circle p-4 mb-3">
+                <i class="fas fa-calendar-xmark text-muted" style="font-size: 32px;"></i>
+            </div>
+            <h5 class="fw-bold text-navy" style="font-family: 'Poppins', sans-serif;">No Hackathons Assigned</h5>
+            <p class="text-muted">You have not been assigned to judge any hackathons yet.</p>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var h in Model)
+            {
+                <div class="col-12 col-md-6 col-xxl-4 hackathon-card">
+                    <div class="card h-100 border-0 shadow-sm hover-shadow transition" style="border-radius: 12px;">
+                        <div class="card-body p-4 d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="bg-warning bg-opacity-10 shadow-sm rounded d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                    <i class="fas fa-gavel text-warning fs-5"></i>
+                                </div>
+                                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill">
+                                    @(h.Teams?.Count ?? 0) Teams
+                                </span>
+                            </div>
+
+                            <h5 class="fw-bold text-navy mb-2" style="font-family: 'Poppins', sans-serif;">@h.Title</h5>
+                            <p class="text-muted small flex-grow-1" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">@h.Description</p>
+
+                            @if (!string.IsNullOrEmpty(h.TechStack))
+                            {
+                                <div class="mt-2 mb-3 d-flex flex-wrap gap-1">
+                                    @foreach (var tech in h.TechStack.Split(','))
+                                    {
+                                        <span class="badge bg-light text-warning text-dark border font-monospace fw-normal">@tech.Trim()</span>
+                                    }
+                                </div>
+                            }
+
+                            <div class="mt-auto pt-3 border-top pb-3 text-muted small">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-calendar-alt text-orange me-2"></i>
+                                    <span>@h.StartDate.ToString("MMM dd") - @h.EndDate.ToString("MMM dd, yyyy")</span>
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-2 mt-2 border-top pt-3">
+                                <a asp-action="ScoreTeams" asp-route-id="@h.Id"
+                                   class="btn btn-warning flex-grow-1 fw-bold text-dark shadow-sm">
+                                    <i class="fas fa-star text-dark me-1"></i> Score Teams
+                                </a>
+                                <a asp-action="Results" asp-route-id="@h.Id"
+                                   class="btn btn-outline-primary px-3 fw-bold">
+                                    <i class="fas fa-trophy"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Apply hover effect to cards dynamically
+            document.querySelectorAll('.hover-shadow').forEach(c => {
+                c.addEventListener('mouseenter', e => e.currentTarget.classList.add('shadow'));
+                c.addEventListener('mouseleave', e => e.currentTarget.classList.remove('shadow'));
+            });
+        });
+    </script>
+}

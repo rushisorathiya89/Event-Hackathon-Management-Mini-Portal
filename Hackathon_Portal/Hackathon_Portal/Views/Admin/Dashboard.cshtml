@@ -1,0 +1,155 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/_AdminLayout.cshtml";
+}
+
+<!-- Welcome Banner -->
+<div class="welcome-banner text-white mb-4 position-relative overflow-hidden" style="background: linear-gradient(135deg, #1A2B4A 0%, #1E3A6E 100%);">
+    <div class="position-relative" style="z-index: 2;">
+        <h2 style="font-family: 'Poppins', sans-serif; font-weight: 700; color: #fff;">Welcome back, Admin!</h2>
+        <p class="m-0" style="opacity: 0.8; font-family: 'Open Sans', sans-serif;">Here is what's happening with your hackathons today.</p>
+    </div>
+    <i class="fas fa-chart-line position-absolute" style="font-size: 140px; right: 20px; bottom: -20px; opacity: 0.05;"></i>
+</div>
+
+<!-- Stats Grid -->
+<div class="row g-4 mb-4">
+    <div class="col-md-3 col-sm-6">
+        <div class="stat-card stat-card-admin">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="m-0 fw-bold" style="color: #1C2B3A; font-family: 'Poppins', sans-serif;">@ViewBag.TotalHackathons</h3>
+                    <p class="text-muted small m-0 text-uppercase fw-bold mt-1" style="letter-spacing: 0.5px;">Hackathons</p>
+                </div>
+                <div class="bg-light rounded d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
+                    <i class="fas fa-calendar-alt fs-5 text-orange"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="stat-card stat-card-admin">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="m-0 fw-bold" style="color: #1C2B3A; font-family: 'Poppins', sans-serif;">@ViewBag.TotalUsers</h3>
+                    <p class="text-muted small m-0 text-uppercase fw-bold mt-1" style="letter-spacing: 0.5px;">Participants</p>
+                </div>
+                <div class="bg-light rounded d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
+                    <i class="fas fa-users fs-5 text-orange"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="stat-card stat-card-admin">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="m-0 fw-bold" style="color: #1C2B3A; font-family: 'Poppins', sans-serif;">@ViewBag.TotalTeams</h3>
+                    <p class="text-muted small m-0 text-uppercase fw-bold mt-1" style="letter-spacing: 0.5px;">Teams</p>
+                </div>
+                <div class="bg-light rounded d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
+                    <i class="fas fa-people-group fs-5 text-orange"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="stat-card stat-card-admin">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="m-0 fw-bold" style="color: #1C2B3A; font-family: 'Poppins', sans-serif;">@ViewBag.TotalJudges</h3>
+                    <p class="text-muted small m-0 text-uppercase fw-bold mt-1" style="letter-spacing: 0.5px;">Judges</p>
+                </div>
+                <div class="bg-light rounded d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
+                    <i class="fas fa-gavel fs-5 text-orange"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions & Recent -->
+<div class="row g-4">
+    <!-- Recent Hackathons Table -->
+    <div class="col-lg-8">
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="m-0 text-white" style="font-size: 16px;"><i class="fas fa-clock text-orange me-2"></i>Recent Hackathons</h5>
+                <a asp-action="Hackathons" class="btn btn-sm btn-outline-light py-0 border-0" style="opacity: 0.8;">View All</a>
+            </div>
+            <div class="card-body p-0">
+                @if (ViewBag.RecentHackathons != null && ((IEnumerable<Hackathon_Portal.Models.Hackathon>)ViewBag.RecentHackathons).Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle m-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="ps-4">Title</th>
+                                    <th>Status</th>
+                                    <th>Judge</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var h in (IEnumerable<Hackathon_Portal.Models.Hackathon>)ViewBag.RecentHackathons)
+                                {
+                                    <tr>
+                                        <td class="ps-4 fw-bold text-navy" style="font-family: 'Poppins', sans-serif;">@h.Title</td>
+                                        <td>
+                                            @if (h.Status == "Published")
+                                            {
+                                                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 py-1 px-2">Published</span>
+                                            }
+                                            else if (h.Status == "Draft")
+                                            {
+                                                <span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 py-1 px-2">Draft</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 py-1 px-2">Cancelled</span>
+                                            }
+                                        </td>
+                                        <td class="text-muted small">@(h.Judge?.FullName ?? "Unassigned")</td>
+                                        <td class="text-muted small">@h.StartDate.ToString("MMM dd, yyyy")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-5">
+                        <i class="fas fa-calendar-times fs-2 text-muted mb-3 opacity-50"></i>
+                        <p class="text-muted m-0">No active hackathons found.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="col-lg-4">
+        <div class="card mb-4" style="background: #1E3A6E; color: white;">
+            <div class="card-body p-4 text-center">
+                <div class="bg-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 60px; height: 60px;">
+                    <i class="fas fa-plus fs-4 text-orange"></i>
+                </div>
+                <h5 class="fw-bold mb-2" style="font-family: 'Poppins', sans-serif;">Host New Hackathon</h5>
+                <p class="small mb-4" style="opacity: 0.8;">Setup categories, dates, and judging criteria.</p>
+                <a asp-action="CreateHackathon" class="btn btn-primary w-100 fw-bold">Create Now</a>
+            </div>
+        </div>
+
+        <div class="card" style="background: #fff; border-top: 4px solid #F4821F;">
+            <div class="card-body p-4 text-center">
+                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 60px; height: 60px;">
+                    <i class="fas fa-user-shield fs-4 text-navy"></i>
+                </div>
+                <h5 class="fw-bold mb-2 text-navy" style="font-family: 'Poppins', sans-serif;">Add New Judge</h5>
+                <p class="small mb-4 text-muted">Create judge credentials for evaluation.</p>
+                <a asp-action="AddJudge" class="btn btn-outline-primary w-100 fw-bold">Register Judge</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,8 +1,160 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@model List<Hackathon_Portal.Models.Hackathon>
+@{
+    ViewData["Title"] = "Welcome to HackPortal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Hero -->
+<section style="position: relative; background: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1600') center/cover no-repeat; padding: 120px 0;">
+    <div style="position: absolute; inset: 0; background: #1A2B4A; opacity: 0.85;"></div>
+    <div class="container position-relative text-center text-white" style="z-index: 10;">
+        <h1 class="text-orange" style="font-size: 68px; font-weight: 800; margin-bottom: 20px; color: #F4821F !important; text-shadow: 0 4px 15px rgba(0,0,0,0.6);">Welcome to HackPortal</h1>
+        <p style="font-size: 18px; opacity: 0.8; margin-bottom: 40px; font-family: 'Open Sans', sans-serif;">Organize, Participate & Judge Hackathons — All in One Place</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a asp-controller="Account" asp-action="Register" class="btn btn-primary px-4 py-2" style="font-size: 16px;">Get Started Free</a>
+            <a href="#events" class="btn btn-outline-light px-4 py-2" style="font-family: 'Poppins', sans-serif; font-weight: 600;">View Events</a>
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="py-5 bg-light">
+    <div class="container text-center mb-5">
+        <h2 style="font-family: 'Poppins'; font-weight: 700; color: #1C2B3A;">How It Works</h2>
+        <p class="text-muted">Participating has never been easier</p>
+    </div>
+    <div class="container">
+        <div class="row g-4 text-center">
+            <div class="col-md-4">
+                <div class="card h-100 p-5" style="border-top: 4px solid #1A2B4A;">
+                    <div style="width: 70px; height: 70px; background: rgba(244,130,31,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                        <i class="fas fa-user-plus fs-3 text-orange"></i>
+                    </div>
+                    <h4 class="text-navy mb-3 fw-bold">1. Register</h4>
+                    <p class="text-muted" style="font-size: 14px;">Create your account and complete your participant profile in seconds.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 p-5" style="border-top: 4px solid #1A2B4A;">
+                    <div style="width: 70px; height: 70px; background: rgba(244,130,31,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                        <i class="fas fa-calendar-check fs-3 text-orange"></i>
+                    </div>
+                    <h4 class="text-navy mb-3 fw-bold">2. Join Event</h4>
+                    <p class="text-muted" style="font-size: 14px;">Browse hackathons and register your team for exciting challenges.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 p-5" style="border-top: 4px solid #1A2B4A;">
+                    <div style="width: 70px; height: 70px; background: rgba(244,130,31,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                        <i class="fas fa-trophy fs-3 text-orange"></i>
+                    </div>
+                    <h4 class="text-navy mb-3 fw-bold">3. Compete & Win</h4>
+                    <p class="text-muted" style="font-size: 14px;">Build amazing projects, get judged, and climb the leaderboard.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Bar -->
+<section class="py-5" style="background: #1E3A6E;">
+    <div class="container">
+        <div class="row text-center text-white">
+            <div class="col-6 col-md-4 mb-4 mb-md-0">
+                <div class="mb-3"><i class="fas fa-calendar-alt fs-1" style="color: rgba(255,255,255,0.2);"></i></div>
+                <h2 style="font-size: 42px; color: #F4821F; font-weight: 700;">@ViewBag.TotalHackathons</h2>
+                <span style="font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 600; text-transform: uppercase;">Active Hackathons</span>
+            </div>
+            <div class="col-6 col-md-4 mb-4 mb-md-0">
+                <div class="mb-3"><i class="fas fa-users fs-1" style="color: rgba(255,255,255,0.2);"></i></div>
+                <h2 style="font-size: 42px; color: #F4821F; font-weight: 700;">@ViewBag.TotalUsers</h2>
+                <span style="font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 600; text-transform: uppercase;">Participants</span>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="mb-3"><i class="fas fa-people-group fs-1" style="color: rgba(255,255,255,0.2);"></i></div>
+                <h2 style="font-size: 42px; color: #F4821F; font-weight: 700;">@ViewBag.TotalTeams</h2>
+                <span style="font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 600; text-transform: uppercase;">Teams Formed</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Events -->
+<section id="events" class="py-5 bg-white">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <h2 style="font-family: 'Poppins'; font-weight: 700; color: #1C2B3A;">Upcoming Hackathons</h2>
+            <p class="text-muted">Explore published hackathons and register your team</p>
+        </div>
+
+        @if (Model.Count == 0)
+        {
+            <div class="text-center py-5">
+                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 80px; height: 80px;">
+                    <i class="fas fa-calendar-xmark text-muted fs-2"></i>
+                </div>
+                <h4 class="text-navy fw-bold">No Hackathons Yet</h4>
+                <p class="text-muted mt-2">Check back soon for exciting events!</p>
+            </div>
+        }
+        else
+        {
+            <div class="row g-4">
+                @foreach (var h in Model)
+                {
+                    <div class="col-md-4">
+                        <div class="card hackathon-card h-100 top-bar-Published p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="bg-light rounded d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
+                                    <i class="fas fa-code fs-5" style="color: #1E3A6E;"></i>
+                                </div>
+                                <span class="badge bg-success" style="font-family: 'Poppins';">Open</span>
+                            </div>
+                            <h4 class="fw-bold text-navy">@h.Title</h4>
+                            <p class="text-muted small" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">@h.Description</p>
+                            
+                            @if (!string.IsNullOrEmpty(h.TechStack))
+                            {
+                                <div class="mt-2 mb-3">
+                                    @foreach (var tech in h.TechStack.Split(','))
+                                    {
+                                        <span class="badge" style="background: rgba(30,58,110,0.1); color: #1E3A6E; border: 1px solid rgba(30,58,110,0.2); font-weight: 600; margin-right: 4px; margin-bottom: 4px;">@tech.Trim()</span>
+                                    }
+                                </div>
+                            }
+                            
+                            <div class="mt-auto d-flex justify-content-between text-muted small" style="font-weight: 600;">
+                                <span><i class="fas fa-calendar text-orange me-1"></i> @h.StartDate.ToString("MMM dd, yyyy")</span>
+                                <span><i class="fas fa-users text-orange me-1"></i> Max @h.MaxTeamSize</span>
+                            </div>
+                            
+                            <hr class="my-3 text-muted">
+                            <a asp-controller="Account" asp-action="Login" class="btn btn-outline-primary w-100 fw-bold">
+                                Login to Participate
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</section>
+
+<!-- Footer -->
+<footer style="background: #1A2B4A; color: #fff; padding: 60px 0 20px;">
+    <div class="container text-center">
+        <h4 class="fw-bold mb-4" style="color: #fff;"><i class="fas fa-bolt text-orange me-2"></i>HackPortal</h4>
+        <p class="text-light mx-auto mb-4" style="max-width: 400px; opacity: 0.7; font-size: 14px;">
+            The ultimate platform to organize and participate in world-class hackathons.
+        </p>
+        <div class="d-flex justify-content-center gap-4 mb-4" style="font-size: 14px;">
+            <a href="#" class="text-white text-decoration-none" style="transition: color 0.2s;" onmouseover="this.style.color='#F4821F'" onmouseout="this.style.color='#fff'">About</a>
+            <a href="#" class="text-white text-decoration-none" style="transition: color 0.2s;" onmouseover="this.style.color='#F4821F'" onmouseout="this.style.color='#fff'">Terms</a>
+            <a href="#" class="text-white text-decoration-none" style="transition: color 0.2s;" onmouseover="this.style.color='#F4821F'" onmouseout="this.style.color='#fff'">Privacy</a>
+            <a href="#" class="text-white text-decoration-none" style="transition: color 0.2s;" onmouseover="this.style.color='#F4821F'" onmouseout="this.style.color='#fff'">Contact</a>
+        </div>
+        <div class="pt-4 mt-4" style="border-top: 1px solid rgba(255,255,255,0.1);">
+            <p style="color: rgba(255,255,255,0.5); font-size: 13px; margin: 0;">&copy; @DateTime.Now.Year HackPortal. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
