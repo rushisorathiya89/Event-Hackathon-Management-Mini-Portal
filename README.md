@@ -87,7 +87,7 @@ Hackathon_Portal/
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/rushisorathiya89/Event-Hackathon-Management-Mini-Portal.git
    cd Hackathon_Portal/Hackathon_Portal
    ```
 
